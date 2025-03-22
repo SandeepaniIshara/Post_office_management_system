@@ -1,0 +1,33 @@
+.header {
+    height: 100vh; /* Responsive height based on viewport width */
+    width: 100%; /* Responsive width based on viewport width */
+    background-size: cover; /* Ensure the image covers the entire header */
+    background-position: center; /* Center the image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+  
+  .header-contents button {
+    background-color: white;
+    padding: 1vw 2.3vw; /* Responsive padding */
+    border: none;
+    border-radius: 50px;
+    font-size: max(1vw, 13px); /* Responsive font size */
+    font-weight: 500;
+    cursor: pointer; /* Add pointer cursor */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth hover effect */
+  }
+  
+  
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }

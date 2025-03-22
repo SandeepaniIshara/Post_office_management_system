@@ -1,0 +1,9 @@
+/* Layout.css */
+.layout-container {
+    min-height: calc(100vh - 60px); /* Adjust based on Navbar height */
+}
+
+.main-content {
+    background-color: #f9f9f9; /* Light background for the main content */
+    overflow-y: auto; /* Ensure content is scrollable if needed */
+}

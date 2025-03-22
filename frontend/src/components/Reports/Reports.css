@@ -1,0 +1,25 @@
+.reports {
+    padding: 20px;
+  }
+  
+  .reports h2 {
+    margin-bottom: 20px;
+  }
+  
+  .report-options {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .report-options button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .report-options button:hover {
+    background-color: #2980b9;
+  }

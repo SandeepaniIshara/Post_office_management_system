@@ -1,0 +1,42 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Reset default margin and padding */
+html, body {
+  margin: 0;
+  font-family: Arial , sans-serif; /* Prevent horizontal scroll */
+}
+
+/* Page container with background image */
+.page-container {
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  background-image: url('/background_logo.jpg'); /* Updated path to the image in the public folder */
+  background-size: cover; /* Ensure the image covers the entire container */
+  background-position: center; /* Center the image */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.auth-buttons {
+  margin-top: 20px;
+}
+
+/* Optional: Add padding or margin to the content */
+.app {
+  width: 100%;
+  max-width: 1200px; /* Optional: Limit the width of the content */
+  margin: 0 auto; /* Center the content */
+  padding: 20px;
+}

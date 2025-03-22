@@ -1,0 +1,31 @@
+.bill-payments {
+    padding: 20px;
+  }
+  
+  .bill-payments h2 {
+    margin-bottom: 20px;
+  }
+  
+  .bill-payments table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .bill-payments th, .bill-payments td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .bill-payments th {
+    background-color: #34495e;
+    color: white;
+  }
+  
+  .bill-payments tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .bill-payments tr:hover {
+    background-color: #ddd;
+  }
