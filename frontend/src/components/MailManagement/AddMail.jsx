@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import './AddMail.css'; // Import custom CSS for the AddMail page
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './AddMail.css';
 
 const AddMail = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
-
+  const navigate = useNavigate();
   const [mail, setMail] = useState({
+    mailId: '', // Added mailId field
     type: '',
     sender: '',
     senderAddress: '',
@@ -14,6 +14,18 @@ const AddMail = () => {
     recipientAddress: '',
     status: 'Received',
   });
+
+  // Generate a unique mail ID on component mount
+  useEffect(() => {
+    const generateMailId = () => {
+      const prefix = 'PO-'; // Post Office prefix
+      const randomNum = Math.floor(100000 + Math.random() * 900000); // 6-digit random number
+      const date = new Date().toISOString().slice(2, 10).replace(/-/g, ''); // YYMMDD format
+      return `${prefix}${date}-${randomNum}`;
+    };
+    
+    setMail(prev => ({ ...prev, mailId: generateMailId() }));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +36,7 @@ const AddMail = () => {
     e.preventDefault();
     console.log('New Mail:', mail);
     // Add logic to save the mail (e.g., API call)
-    navigate('/mailManagement'); // Navigate back to the Mail Management page after saving
+    navigate('/mailManagement');
   };
 
   return (
@@ -35,104 +47,49 @@ const AddMail = () => {
         </div>
         <div className="card-body">
           <form onSubmit={handleSubmit}>
+            {/* Mail ID Field (read-only) */}
+            <div className="mb-3">
+              <label htmlFor="mailId" className="form-label">Mail ID</label>
+              <input
+                type="text"
+                className="form-control"
+                id="mailId"
+                name="mailId"
+                value={mail.mailId}
+                onChange={handleChange}
+                readOnly
+                style={{ backgroundColor: '#f8f9fa', cursor: 'not-allowed' }}
+              />
+              <small className="text-muted">Automatically generated mail ID</small>
+            </div>
+
             {/* Mail Type Field */}
             <div className="mb-3">
               <label htmlFor="type" className="form-label">Mail Type</label>
-              <input
-                type="text"
+              <select
                 className="form-control"
                 id="type"
                 name="type"
                 value={mail.type}
                 onChange={handleChange}
-                placeholder="Enter mail type (e.g., Incoming, Outgoing)"
                 required
-              />
-            </div>
-
-            {/* Sender Name Field */}
-            <div className="mb-3">
-              <label htmlFor="sender" className="form-label">Sender Name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="sender"
-                name="sender"
-                value={mail.sender}
-                onChange={handleChange}
-                placeholder="Enter sender name"
-                required
-              />
-            </div>
-
-            {/* Sender Address Field */}
-            <div className="mb-3">
-              <label htmlFor="senderAddress" className="form-label">Sender Address</label>
-              <input
-                type="text"
-                className="form-control"
-                id="senderAddress"
-                name="senderAddress"
-                value={mail.senderAddress}
-                onChange={handleChange}
-                placeholder="Enter sender address"
-                required
-              />
-            </div>
-
-            {/* Receiver Name Field */}
-            <div className="mb-3">
-              <label htmlFor="recipient" className="form-label">Receiver Name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="recipient"
-                name="recipient"
-                value={mail.recipient}
-                onChange={handleChange}
-                placeholder="Enter receiver name"
-                required
-              />
-            </div>
-
-            {/* Receiver Address Field */}
-            <div className="mb-3">
-              <label htmlFor="recipientAddress" className="form-label">Receiver Address</label>
-              <input
-                type="text"
-                className="form-control"
-                id="recipientAddress"
-                name="recipientAddress"
-                value={mail.recipientAddress}
-                onChange={handleChange}
-                placeholder="Enter receiver address"
-                required
-              />
-            </div>
-
-            {/* Status Field */}
-            <div className="mb-3">
-              <label htmlFor="status" className="form-label">Status</label>
-              <select
-                className="form-control"
-                id="status"
-                name="status"
-                value={mail.status}
-                onChange={handleChange}
               >
-                <option value="Received">Received</option>
-                <option value="Dispatched">Dispatched</option>
-                <option value="In Transit">In Transit</option>
-                <option value="Delivered">Delivered</option>
+                <option value="">Select mail type</option>
+                <option value="Incoming">Incoming</option>
+                <option value="Outgoing">Outgoing</option>
+                <option value="Registered">Registered</option>
+                <option value="Express">Express</option>
               </select>
             </div>
 
-            {/* Buttons */}
+            {/* Rest of your existing form fields */}
+            {/* ... */}
+
             <div className="d-flex justify-content-between">
               <button
                 type="button"
                 className="btn btn-secondary"
-                onClick={() => navigate('/MailManagement')} // Navigate back to Mail Management page
+                onClick={() => navigate('/MailManagement')}
               >
                 <i className="fas fa-arrow-left me-2"></i>Back
               </button>

@@ -12,6 +12,7 @@ import Layout from './components/Layout';
 import Profile from './components/Profile/Profile';
 import AddBill from './components/BillPayment/AddBill';
 import AddMail from './components/MailManagement/AddMail';
+import AddItem from './components/Inventory/AddItem';
 import './App.css';
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/billPayment/add" element={<AddBill />} />
         <Route path="/mailManagement/add" element={<AddMail />} />
+        <Route path="/inventory/add" element={<AddItem />} />
         <Route element={<Layout />}> {/* Wrap routes that need the navbar */}
           <Route path="/postalClerk" element={<PostalClerk />} />
           <Route path="/mailManagement" element={<MailManagement />} />

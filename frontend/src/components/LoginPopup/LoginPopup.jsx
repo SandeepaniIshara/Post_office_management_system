@@ -1,30 +1,116 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './LoginPopup.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { FiMail, FiLock, FiLogIn } from 'react-icons/fi';
 
 const LoginPopup = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const userType = location.state?.userType || 'User';
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (event) => {
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleLogin = async (event) => {
     event.preventDefault();
-    // Perform login logic here (e.g., API call to authenticate the user)
-    // If login is successful, navigate to the appropriate dashboard
-    if (userType === 'Postal Clerk') {
-      navigate('/PostalClerk');
-    } else if (userType === 'Mail Deliverer') {
-      navigate('/MailDeliverer');
+    setIsLoading(true);
+    setError('');
+
+    // Basic validation
+    if (!formData.email || !formData.password) {
+      setError('Please fill in all fields');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
+        email: formData.email,
+        password: formData.password
+      });
+
+      const { token, user } = response.data;
+      
+      // Store token in localStorage and context/state
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      
+      // Redirect based on user type
+      if (user.userType === 'Postal Clerk') {
+        navigate('/postalClerk');
+      } else if (user.userType === 'Admin') {
+        navigate('/admin');
+      } else {
+        setError('Unauthorized access. Please contact admin.');
+      }
+    } catch (err) {
+      const errorMessage = err.response?.data?.error || 
+                         err.message || 
+                         'Login failed. Please try again.';
+      setError(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className='login-popup'>
-      <h2>Login as {userType}</h2>
+    <div className="login-popup">
+      <h2>Post Office Login</h2>
       <form onSubmit={handleLogin}>
-        <input type='text' placeholder='Username' required />
-        <input type='password' placeholder='Password' required />
-        <button type='submit'>Login</button>
+        <div className="input-group">
+          <FiMail className="input-icon" />
+          <input
+            type="email"
+            name="email"
+            placeholder="Official Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        
+        <div className="input-group">
+          <FiLock className="input-icon" />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        
+        {error && <div className="error-message">{error}</div>}
+        
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? (
+            <span className="spinner"></span>
+          ) : (
+            <>
+              <FiLogIn className="btn-icon" />
+              Login
+            </>
+          )}
+        </button>
+        
+        <div className="login-footer">
+          <a href="/forgot-password" className="forgot-password">
+            Forgot your password?
+          </a>
+          <p className="signup-link">
+            Don't have an account? <a href="/register">Sign up</a>
+          </p>
+        </div>
       </form>
     </div>
   );

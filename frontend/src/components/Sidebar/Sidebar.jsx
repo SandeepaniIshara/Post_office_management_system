@@ -1,34 +1,47 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import './Sidebar.css'; // Import custom CSS for the sidebar
+import { Link, useLocation } from 'react-router-dom';
+import { 
+  FiMail, 
+  FiDollarSign, 
+  FiPackage, 
+  FiBarChart2,
+  FiUser
+} from 'react-icons/fi';
+import './Sidebar.css';
 
 const Sidebar = () => {
+  const location = useLocation();
+  
+  const navItems = [
+    { path: '/mailmanagement', icon: <FiMail />, label: 'Mail Management' },
+    { path: '/billpayment', icon: <FiDollarSign />, label: 'Bill Payment' },
+    { path: '/inventory', icon: <FiPackage />, label: 'Inventory' },
+    { path: '/reports', icon: <FiBarChart2 />, label: 'Reports' },
+    { path: '/profile', icon: <FiUser />, label: 'User Profile' }
+  ];
+
   return (
-    <div className="sidebar bg-dark text-white p-3">
-      <h2 className="text-center mb-4">Postal Clerk</h2>
-      <ul className="list-unstyled">
-        <li className="mb-3">
-          <Link to="/mailmanagement" className="text-white text-decoration-none d-flex align-items-center">
-            <i className="fas fa-envelope me-2"></i>Mail Management
-          </Link>
-        </li>
-        <li className="mb-3">
-          <Link to="/billpayment" className="text-white text-decoration-none d-flex align-items-center">
-            <i className="fas fa-money-bill me-2"></i>Bill Payment
-          </Link>
-        </li>
-        <li className="mb-3">
-          <Link to="/inventory" className="text-white text-decoration-none d-flex align-items-center">
-            <i className="fas fa-boxes me-2"></i>Inventory
-          </Link>
-        </li>
-        <li className="mb-3">
-          <Link to="/reports" className="text-white text-decoration-none d-flex align-items-center">
-            <i className="fas fa-chart-bar me-2"></i>Reports
-          </Link>
-        </li>
-      </ul>
+    <div className="sidebar">
+      <div className="sidebar-header">
+        <h3>Postal Clerk</h3>
+      </div>
+      <nav className="sidebar-nav">
+        <ul>
+          {navItems.map((item) => (
+            <li key={item.path}>
+              <Link
+                to={item.path}
+                className={`nav-link ${
+                  location.pathname === item.path ? 'active' : ''
+                }`}
+              >
+                <span className="nav-icon">{item.icon}</span>
+                <span className="nav-text">{item.label}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 };

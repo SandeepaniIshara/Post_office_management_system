@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Inventory = () => {
+  const navigate = useNavigate();
   const [items, setItems] = useState([
     { id: 1, name: 'Stamps', quantity: 100 },
     { id: 2, name: 'Envelopes', quantity: 50 },
@@ -57,7 +59,12 @@ const Inventory = () => {
 
       {/* Add New Item Button */}
       <div className="text-end">
-        <button className="btn btn-success">Add New Item</button>
+        <button
+          className="btn btn-success"
+          onClick={() => navigate('/inventory/add')}
+        >
+          Add New Item
+        </button>
       </div>
     </div>
   );

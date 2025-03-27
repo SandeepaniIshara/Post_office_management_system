@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Import axios for making HTTP requests
+import axios from 'axios';
+import { FiUser, FiMail, FiLock, FiHome, FiPhone, FiLogIn } from 'react-icons/fi';
+import './Register.css';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        username: '',
+        full_name: '',
         email: '',
         password: '',
         confirmPassword: '',
         address: '',
-        phone: '',
+        phone_number: '',
     });
 
-    const [error, setError] = useState(''); // State to handle errors
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -19,119 +24,109 @@ const Register = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent the form from submitting the traditional way
-    
-        // Check if passwords match
+        e.preventDefault();
+        setIsLoading(true);
+        setError('');
+
         if (formData.password !== formData.confirmPassword) {
             setError('Passwords do not match');
+            setIsLoading(false);
             return;
         }
-    
+
         try {
-            // Make a POST request to the backend API
             const response = await axios.post('http://localhost:5000/api/auth/register', {
-                full_name: formData.username, // Change "username" to "full_name" to match backend
+                full_name: formData.full_name,
                 email: formData.email,
                 password: formData.password,
                 address: formData.address,
-                phone_number: formData.phone, // Change "phone" to "phone_number" to match backend
+                phone_number: formData.phone_number,
             });
-    
-            // Handle successful registration
+
             if (response.status === 201) {
-                alert('User registered successfully!');
-                // Redirect to login page or another page
-                window.location.href = '/login';
+                alert('Registration successful! Please login with your credentials.');
+                navigate('/login');
             }
         } catch (err) {
-            // Handle errors from the backend
-            if (err.response && err.response.data && err.response.data.error) {
-                setError(err.response.data.error);
-            } else {
-                setError('An error occurred during registration');
-            }
+            setError(err.response?.data?.error || 'Registration failed. Please try again.');
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
-        <div className="container d-flex justify-content-center align-items-center vh-100">
-            <div className="card shadow-lg p-4" style={{ width: '350px' }}>
-                <h2 className="text-center mb-4">Create an Account</h2>
-                {error && <div className="alert alert-danger">{error}</div>} {/* Display error message */}
+        <div className="register-container">
+            <div className="register-popup">
+                <h2 className="register-title">Post Office Registration</h2>
+                {error && <div className="register-error">{error}</div>}
 
-                <form onSubmit={handleSubmit}>
-                    {/* Full Name */}
-                    <div className="mb-3">
-                        <label htmlFor="full_name" className="form-label">Full Name</label>
+                <form className="register-form" onSubmit={handleSubmit}>
+                    <div className="input-group">
+                        <FiUser className="input-icon" />
                         <input
                             type="text"
-                            className="form-control"
                             id="full_name"
+                            placeholder="Full Name"
                             value={formData.full_name}
                             onChange={handleChange}
                             required
                         />
                     </div>
 
-                    {/* Email */}
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email</label>
+                    <div className="input-group">
+                        <FiMail className="input-icon" />
                         <input
                             type="email"
-                            className="form-control"
                             id="email"
+                            placeholder="Official Email"
                             value={formData.email}
                             onChange={handleChange}
                             required
                         />
                     </div>
 
-                    {/* Password */}
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label">Password</label>
+                    <div className="input-group">
+                        <FiLock className="input-icon" />
                         <input
                             type="password"
-                            className="form-control"
                             id="password"
+                            placeholder="Password"
                             value={formData.password}
                             onChange={handleChange}
                             required
                         />
                     </div>
 
-                    {/* Confirm Password */}
-                    <div className="mb-3">
-                        <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+                    <div className="input-group">
+                        <FiLock className="input-icon" />
                         <input
                             type="password"
-                            className="form-control"
                             id="confirmPassword"
+                            placeholder="Confirm Password"
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             required
                         />
                     </div>
 
-                    {/* Address */}
-                    <div className="mb-3">
-                        <label htmlFor="address" className="form-label">Address</label>
+                    <div className="input-group">
+                        <FiHome className="input-icon" />
                         <input
                             type="text"
-                            className="form-control"
                             id="address"
+                            placeholder="Full Address"
                             value={formData.address}
                             onChange={handleChange}
                             required
                         />
                     </div>
 
-                    {/* Phone Number */}
-                    <div className="mb-3">
-                        <label htmlFor="phone_number" className="form-label">Phone Number</label>
+                    <div className="input-group">
+                        <FiPhone className="input-icon" />
                         <input
                             type="tel"
-                            className="form-control"
                             id="phone_number"
+                            placeholder="Phone Number"
                             value={formData.phone_number}
                             onChange={handleChange}
                             pattern="[0-9]{10}"
@@ -139,17 +134,18 @@ const Register = () => {
                         />
                     </div>
 
-                    {/* Submit Button */}
-                    <button type="submit" className="btn btn-primary w-100">
-                        Register
+                    <button type="submit" disabled={isLoading}>
+                        {isLoading ? 'Registering...' : (
+                            <>
+                                <FiLogIn style={{ marginRight: '8px' }} />
+                                Register
+                            </>
+                        )}
                     </button>
                 </form>
 
-                {/* Link to Login Page */}
-                <div className="mt-3 text-center">
-                    <p className="text-muted">
-                        Already have an account? <a href="/login" className="text-decoration-none">Login</a>
-                    </p>
+                <div className="login-link">
+                    <p>Already have an account? <a href="/login">Login here</a></p>
                 </div>
             </div>
         </div>

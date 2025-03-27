@@ -3,7 +3,7 @@ import './Profile.css'; // Import custom CSS for the profile page
 
 const Profile = () => {
     // State to manage profile data
-    const [profile, setProfile] = useState({
+   const [profile, setProfile] = useState({
         name: 'John Doe',
         UserId: 'ABC123',
         phone: '+1234567890',

@@ -1,33 +1,38 @@
 .login-popup {
-    width: 350px;
+    width: 380px;
     margin: 100px auto;
-    padding: 30px;
-    background-color: #fff;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    padding: 35px;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    border-top: 4px solid #2a5298;
     text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
+    animation: fadeIn 0.4s ease-out;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .login-popup h2 {
     margin-bottom: 25px;
-    font-size: 24px;
-    color: #333;
+    font-size: 22px;
+    color: #2a5298;
     font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 .login-popup input {
     width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 12px 15px;
+    margin: 12px 0;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
     font-size: 14px;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
+    background-color: #fff;
 }
 
 .login-popup input:focus {
-    border-color: #007bff;
+    border-color: #2a5298;
+    box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.15);
     outline: none;
 }
 
@@ -35,52 +40,67 @@
     width: 100%;
     padding: 12px;
     margin-top: 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #2a5298;
+    color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
 }
 
 .login-popup button:hover {
-    background-color: #0056b3;
+    background-color: #1e3c72;
+    transform: translateY(-1px);
+}
+
+.login-popup .error {
+    color: #dc3545;
+    font-size: 13px;
+    margin-top: 10px;
+    text-align: left;
+    padding-left: 5px;
 }
 
 .login-popup .forgot-password {
     display: block;
     margin-top: 15px;
-    color: #007bff;
+    color: #2a5298;
     text-decoration: none;
-    font-size: 14px;
-    transition: color 0.3s ease;
+    font-size: 13px;
+    transition: color 0.2s ease;
+    text-align: right;
 }
 
 .login-popup .forgot-password:hover {
-    color: #0056b3;
+    color: #1e3c72;
+    text-decoration: underline;
 }
 
-.login-popup .signup-link {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #666;
-}
-
-.login-popup .signup-link a {
-    color: #007bff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.login-popup .signup-link a:hover {
-    color: #0056b3;
-}
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+  }
+  
+  .input-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    font-size: 16px;
+  }
+  
+  .login-popup input {
+    padding-left: 40px !important;
+  }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(10px);
     }
     to {
         opacity: 1;
