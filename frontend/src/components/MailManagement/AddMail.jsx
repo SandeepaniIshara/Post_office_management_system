@@ -82,9 +82,7 @@ const AddMail = () => {
               </select>
             </div>
 
-            {/* Rest of your existing form fields */}
-            {/* ... */}
-
+            {/* Buttons */}
             <div className="d-flex justify-content-between">
               <button
                 type="button"

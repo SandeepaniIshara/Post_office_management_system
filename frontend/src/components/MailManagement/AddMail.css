@@ -1,22 +1,89 @@
-/* Add this to your existing CSS */
+/* General container styling */
 .container {
-  max-width: 800px; /* Increased width to accommodate more fields */
+  max-width: 600px; /* Limit the width for better readability */
+  margin: 50px auto; /* Center the form vertically and horizontally */
 }
 
-/* Style for read-only fields */
-.form-control[readonly] {
+/* Card styling */
+.card {
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+/* Card header styling */
+.card-header {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Form label styling */
+.form-label {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Read-only input styling */
+input[readonly] {
   background-color: #f8f9fa;
   cursor: not-allowed;
+  color: #6c757d; /* Muted text color */
 }
 
-/* Mail ID field specific styling */
-.mail-id-field {
-  position: relative;
+/* Select dropdown styling */
+select.form-control {
+  font-size: 14px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
 }
 
-.mail-id-field small {
-  position: absolute;
-  right: 0;
-  bottom: -18px;
+select.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+/* Button styling */
+.btn {
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 5px;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Small text styling */
+.text-muted {
   font-size: 12px;
+  color: #6c757d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    margin: 20px auto;
+    padding: 10px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
 }
