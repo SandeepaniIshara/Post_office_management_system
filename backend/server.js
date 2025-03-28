@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import db from "./config/db.js";
 import UserRouter from "./router/UserRouter.js";
 import AuthRouter from "./router/AuthRouter.js"; // New auth routes
+import mailRoutes from "./routes/mailRouter.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ db.connect()
 // Routes
 app.use("/api/users", UserRouter); // For user management
 app.use("/api/auth", AuthRouter); // For authentication
+app.use("/api/mails", mailRouter);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
